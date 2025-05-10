@@ -159,40 +159,44 @@ index index.html;
 }
 docker-compose.yml
 version: '3.9'
+
 services:
-web-node-1:
-image: nginx:latest
-container_name: web-node-1
-volumes:
-- ./index.html:/usr/share/nginx/html/index.html
-- ./nginx.conf:/etc/nginx/conf.d/default.conf
-ports:
-- "8081:80"
+  web-node-1:
+    image: nginx:latest
+    container_name: web-node-1
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8081:80"
+    networks:
+      - html-cluster
+
+  web-node-2:
+    image: nginx:latest
+    container_name: web-node-2
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8082:80"
+    networks:
+      - html-cluster
+
+  web-node-3:
+    image: nginx:latest
+    container_name: web-node-3
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8083:80"
+    networks:
+      - html-cluster
+
 networks:
-- html-cluster
-web-node-2:
-image: nginx:latest
-container_name: web-node-2
-volumes:
-- ./index.html:/usr/share/nginx/html/index.html
-- ./nginx.conf:/etc/nginx/conf.d/default.conf
-ports:
-- "8082:80"
-networks:
-- html-cluster
-web-node-3:
-image: nginx:latest
-container_name: web-node-3
-volumes:
-- ./index.html:/usr/share/nginx/html/index.html
-- ./nginx.conf:/etc/nginx/conf.d/default.conf
-ports:
-- "8083:80"
-networks:
-- html-cluster
-networks:
-html-cluster:
-driver: bridge
+  html-cluster:
+    driver: bridge
 run: docker-compose up -d
 =======================================================================================
 11. docker swarm
@@ -210,6 +214,6 @@ docker system prune -a --volumes
 =======================================================================================
 13.minikube:
  C:\Program Files\Docker\Docker\Resources \bin\Minikube>minikube start
-- Kubectl cluster-info ,  kubectl create deployment nginx-deployment --image=nginx,   kubectl get pods 
+Kubectl cluster-info ,  kubectl create deployment nginx-deployment --image=nginx,   kubectl get pods 
 kubectl expose deployment nginx-deployment --port=80 --type=NodePort  , minikube service nginx-deployment --url
 =======================================================================================
